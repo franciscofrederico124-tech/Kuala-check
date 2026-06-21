@@ -1,0 +1,81 @@
+@import "/public/style/variable.css";
+
+.container_como_funciona {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: all .25s ease-in-out;
+    backdrop-filter: blur(10px);
+    background: rgba(1, 70, 1, 0.247);
+}
+.container_como_funciona h1 {
+    margin: 0px auto;
+    color: white;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+}
+.cards_como_funciona {
+    display: grid;
+    width: 90%;
+    height: auto;
+    gap: 16px;
+    grid-template-columns: repeat(3, 30%);
+    margin: 24px auto;
+}
+.card_como_funciona {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(1, 131, 1, 0.247);
+    padding: 16px;
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    color: white;
+    transition: all .25s ease-in-out;
+}
+
+.card_como_funciona:hover {
+    transform: scale(1.03);
+}
+.card_como_funciona:hover .title .icon {
+    transform: scale(1.03);
+}
+.card_como_funciona:hover .title h3, .card_como_funciona:hover .cont {
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+}
+
+.card_como_funciona:hover .title .icon i {
+    transform: rotate(360deg);
+}
+
+.card_como_funciona .title {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: start;
+    gap: 8px;
+}
+.card_como_funciona .title .icon {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(1, 131, 1, 0.623);
+    border-radius: 24px;
+    transition: all .25s ease-in-out;
+}
+.title .icon i {
+    color: white;
+    transition: all .55s ease-in-out;
+}
+.title h3 {
+    margin: auto 0;
+    transition: all .25s ease-in-out;
+}
+

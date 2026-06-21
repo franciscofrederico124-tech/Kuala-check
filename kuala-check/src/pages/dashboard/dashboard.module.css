@@ -1,0 +1,65 @@
+.dashbord_container {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: all .25s ease-in-out;
+    backdrop-filter: blur(10px);
+    background: rgba(1, 70, 1, 0.247);
+}
+
+.controlls {
+    margin: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 24px
+}
+
+.controlls .controll_card {
+    color: white;
+    height: 200px;
+    flex: 1;
+    width: 300px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    backdrop-filter: blur(10px);
+    border-radius: 32px;
+    transition: all .25s ease-in-out;
+}
+
+.controll_card:hover {
+    transform: scale(1.03);
+}
+.controll_card:hover .icon i, .controll_card:hover h2 {
+    text-shadow: 0px 0px 16px rgba(255, 255, 255, 1);
+}
+
+.controlls .controll_card h2 {
+    text-align: center;
+    transition: all .25s ease-in-out;
+}
+
+.controlls .controll_card .icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    border-radius: 50px;
+    background: rgba(0, 128, 0, 0.664);
+}
+
+.controlls .controll_card i {
+    font-size: 24px;
+    transition: all .25s ease-in-out;
+}

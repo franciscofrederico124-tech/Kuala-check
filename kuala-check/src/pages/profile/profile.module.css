@@ -1,0 +1,141 @@
+.container_profile {
+    height: 100%;
+    width: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    overflow: hidden;
+    overflow-y: auto;
+    backdrop-filter: blur(10px);
+    background: rgba(1, 70, 1, 0.247);
+}
+
+.card_profile {
+    height: auto;
+    backdrop-filter: blur(10px);
+    width: 80%;
+    margin: auto;
+    border-radius: 24px;
+    padding: 0;
+    gap: 0 !important;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    overflow: hidden;
+}
+
+.card_profile .title {
+    display: flex;
+    padding: 24px;
+    height: 300px;
+    width: 300px;
+    justify-content: center;
+    align-items: center;
+    background: green;
+    position: relative;
+    overflow: hidden;
+}
+
+.card_profile .title h1 {
+    font-size: 92px;
+    color: white;
+    text-shadow: 0px 0px 24px rgba(255, 255, 255, 0.8);
+    transition: all .25s ease-in-out;
+    z-index: 2;
+}
+
+.card_profile .title::after {
+    content: "";
+    position: absolute;
+    height: 0%;
+    width: 0%;
+    border-radius: 50%;
+    background: rgba(0, 207, 0, 0.39);
+    transition: all .55s ease-in-out;
+    transform: rotate(0deg);
+    z-index: auto;
+}
+.title:hover::after {
+    height: 150%;
+    width: 150%;
+    transform: rotate(90deg);
+    border-radius: 50%;
+}
+.title:hover h1 {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.grid_layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 26px;
+}
+
+.basic_data {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 16px;
+}
+
+.basic_data span {
+    height: 40px;
+    background: green;
+    width: 70%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    padding: 0px 12px;
+    border-radius: 16px;
+}
+
+.basic_data span i {
+    padding: 4px;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+}
+
+.basic_data span i::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0;
+    width: 100%;
+    background:  rgba(0, 207, 0, 0.39);
+    transition: all .55s ease-in-out;
+}
+.basic_data span:hover i::after {
+    height: 100%;
+}
+.actions {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(2, 40%);
+    justify-content: center;
+    gap: 16px;
+    margin: 24px auto;
+}
+
+.actions button {
+    height: 40px;
+    gap: 8px;
+    border-radius: 32px;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    transition: all .25s ease-in-out;
+}
+.log_out {
+    border: 1px solid red !important;
+    background: red !important;
+}
+.actions button:hover {
+    transform: scale(1.03);
+}

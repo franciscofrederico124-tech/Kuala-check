@@ -1,0 +1,22 @@
+.main-conatiner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+.container {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 100dvw;
+    height: calc(100dvh - 130px);
+    background: url("../public/image/found.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}

@@ -1,0 +1,168 @@
+/* ========================================
+   DESIGN SYSTEM - VARIÁVEIS GLOBAIS
+   Estrutura profissional para produção
+   ======================================== */
+
+:root {
+    /* ========================================
+       ESPAÇAMENTOS (SPACING)
+       Sistema de 4px (escala consistente)
+       ======================================== */
+    
+    /* Espaçamentos extras (XS a 6XL) */
+    --space-4xs: 0.125rem;  /* 2px  - Mínimo */
+    --space-3xs: 0.25rem;   /* 4px  - Micro */
+    --space-2xs: 0.5rem;    /* 8px  - Extra pequeno */
+    --space-xs: 0.75rem;    /* 12px - Muito pequeno */
+    --space-sm: 1rem;       /* 16px - Pequeno (base) */
+    --space-md: 1.5rem;     /* 24px - Médio */
+    --space-lg: 2rem;       /* 32px - Grande */
+    --space-xl: 3rem;       /* 48px - Extra grande */
+    --space-2xl: 4rem;      /* 64px - 2x grande */
+    --space-3xl: 6rem;      /* 96px - 3x grande */
+    --space-4xl: 8rem;      /* 128px - 4x grande */
+    --space-5xl: 12rem;     /* 192px - 5x grande */
+    --space-6xl: 16rem;     /* 256px - 6x grande */
+
+    /* Aliases semânticos para consistência */
+    --spacing-none: 0;
+    --spacing-base: var(--space-sm);     /* 16px - base */
+    --spacing-tight: var(--space-xs);    /* 12px - compacto */
+    --spacing-loose: var(--space-md);    /* 24px - espaçado */
+    
+    /* Gap e Grid */
+    --gap-sm: var(--space-xs);    /* 12px */
+    --gap-md: var(--space-sm);    /* 16px */
+    --gap-lg: var(--space-md);    /* 24px */
+    --gap-xl: var(--space-lg);    /* 32px */
+
+    /* ========================================
+       BORDER RADIUS (CANTOS ARREDONDADOS)
+       ======================================== */
+    
+    --radius-none: 0;
+    --radius-sm: 0.25rem;    /* 4px  - Botões pequenos */
+    --radius-md: 0.5rem;     /* 8px  - Cards, inputs */
+    --radius-lg: 1rem;       /* 16px - Modais, cards grandes */
+    --radius-xl: 1.5rem;     /* 24px - Badges, elementos especiais */
+    --radius-2xl: 2rem;      /* 32px - Elementos muito arredondados */
+    --radius-3xl: 3rem;      /* 48px - Máximo controlado */
+    --radius-full: 9999px;   /* 9999px - Círculos, pills */
+    --radius-round: 50%;     /* 50% - Elementos perfeitamente redondos */
+
+    /* Aliases semânticos */
+    --radius-button: var(--radius-sm);    /* 4px */
+    --radius-card: var(--radius-md);      /* 8px */
+    --radius-modal: var(--radius-lg);     /* 16px */
+    --radius-pill: var(--radius-full);    /* 9999px */
+    --radius-circle: var(--radius-round); /* 50% */
+
+    /* ========================================
+       CORES (COLORS)
+       Paleta completa com verde
+       ======================================== */
+    
+    /* === VERDE - Primário (Base do sistema) === */
+    --green-50: #f0fdf4;    /* Muito claro - backgrounds */
+    --green-100: #dcfce7;   /* Claro - hovers suaves */
+    --green-200: #bbf7d0;   /* Claro médio - bordas */
+    --green-300: #86efac;   /* Médio claro - estados */
+    --green-400: #4ade80;   /* Médio - ícones, detalhes */
+    --green-500: #22c55e;   /* Base - cor primária principal */
+    --green-600: #16a34a;   /* Médio escuro - hovers */
+    --green-700: #15803d;   /* Escuro - textos */
+    --green-800: #166534;   /* Muito escuro - headings */
+    --green-900: #14532d;   /* Extremamente escuro - contrastes */
+    --green-950: #0f3b1e;   /* Quase preto - backgrounds especiais */
+
+    /* === VERDE - Alternativos (para variações) === */
+    --green-emerald-500: #10b981;  /* Verde esmeralda */
+    --green-teal-500: #14b8a6;     /* Verde azulado */
+    --green-lime-500: #84cc16;     /* Verde lima */
+    --green-mint-500: #2dd4bf;     /* Verde menta */
+    --green-forest-500: #2d6a4f;   /* Verde floresta */
+
+    /* === NEUTROS (Cinzas) === */
+    --white: #ffffff;
+    --black: #000000;
+    
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --gray-950: #030712;
+
+    /* === CORES DE SISTEMA (Semânticas) === */
+    
+    /* Feedback */
+    --success: var(--green-600);
+    --success-light: var(--green-100);
+    --success-dark: var(--green-800);
+    
+    --error: #dc2626;
+    --error-light: #fee2e2;
+    --error-dark: #991b1b;
+    
+    --warning: #f59e0b;
+    --warning-light: #fef3c7;
+    --warning-dark: #b45309;
+    
+    --info: #3b82f6;
+    --info-light: #dbeafe;
+    --info-dark: #1e40af;
+
+    /* === CORES DE TEXTO === */
+    --text-primary: var(--gray-900);
+    --text-secondary: var(--gray-600);
+    --text-tertiary: var(--gray-400);
+    --text-disabled: var(--gray-300);
+    --text-inverse: var(--white);
+    
+    /* === CORES DE BACKGROUND === */
+    --bg-primary: var(--white);
+    --bg-secondary: var(--gray-50);
+    --bg-tertiary: var(--gray-100);
+    --bg-inverse: var(--gray-900);
+    
+    /* === CORES DE BORDA === */
+    --border-light: var(--gray-200);
+    --border-medium: var(--gray-300);
+    --border-heavy: var(--gray-400);
+
+    /* === SEMÂNTICAS VERDE (uso direto) === */
+    --primary: var(--green-600);
+    --primary-light: var(--green-100);
+    --primary-dark: var(--green-800);
+    --primary-hover: var(--green-700);
+    --primary-active: var(--green-800);
+    --primary-focus: var(--green-300);
+    
+    /* === GRADIENTES (exemplos) === */
+    --gradient-primary: linear-gradient(135deg, var(--green-500), var(--green-700));
+    --gradient-success: linear-gradient(135deg, var(--green-400), var(--green-600));
+    --gradient-dark: linear-gradient(135deg, var(--gray-800), var(--gray-900));
+    
+    /* ========================================
+       TRANSIÇÕES (opcional - para completar)
+       ======================================== */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+    
+    /* ========================================
+       Z-INDEX (opcional)
+       ======================================== */
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal: 400;
+    --z-popover: 500;
+    --z-tooltip: 600;
+    --z-toast: 700;
+}

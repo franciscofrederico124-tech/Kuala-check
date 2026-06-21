@@ -1,0 +1,85 @@
+.container_form {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    transition: all .25s ease-in-out;
+    backdrop-filter: blur(10px);
+    background: rgba(1, 70, 1, 0.247);
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    padding: 0px 32px 32px 32px;
+    gap: 16px;
+    border-radius: 32px;
+    backdrop-filter: blur(10px);
+    margin: auto;
+    margin: 24px auto;
+}
+
+.form .icon {
+    font-size: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 128px;
+    width: 128px;
+    color: white;
+    background: transparent;
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+}
+
+.form .input {
+    display: grid;
+    width: 80%;
+    grid-template-columns: 10% 90%;
+    background: white;
+    border-radius: 32px;
+    overflow: hidden;
+    height: 40px;
+    transition: all .25s ease-in-out;
+}
+
+.form .input label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border: none;
+    margin: auto;
+}
+
+.form .input label i {
+    color: var(--green-900);
+}
+
+.form .input input {
+    border: none;
+    outline: none;
+}
+
+.button_register {
+    height: 40px;
+    width: 250px;
+    gap: 8px;
+    border-radius: 32px;
+    border: 1px solid white;
+    background: transparent;
+    color: white;
+    transition: all .25s ease-in-out;
+}
+
+.button_register:hover,
+.input:hover {
+    transform: scale(1.03);
+}

@@ -24,7 +24,7 @@
     margin: 24px auto;
     width: 90%;
     display: grid;
-    grid-template-columns: repeat(3, 30%);
+    grid-template-columns: repeat(1, 50%);
     gap: 16px;
     justify-content: center;
     align-items: center;
@@ -69,6 +69,21 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.controll_items {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantity {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .switch {
@@ -126,4 +141,12 @@
 
 .switch:active {
     transform: scale(1.03);
+}
+
+.switch_disabled {
+    opacity: 0.4;
+}
+
+.switch_disabled:hover {
+    transform: none !important;
 }

@@ -8,6 +8,11 @@ import register from "../../../services/register"
 import { useState, useEffect } from "react"
 import nav from "../../../hooks/nav"
 
+interface FeedbackState {
+    message: string;
+    type: "success" | "error" | "";
+}
+
 export default function Register() {
     const [data, set_data] = useState({
         first_name: "",
@@ -17,6 +22,12 @@ export default function Register() {
         confirm_password: "",
     })
 
+    const [feedback, setFeedback] = useState<FeedbackState>({
+        message: "",
+        type: ""
+    });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         set_data({
@@ -35,15 +46,26 @@ export default function Register() {
                 <section className={style.container_form}>
                     <form className={style.form} autoComplete="off" onSubmit={async (e) => {
                         e.preventDefault();
+                        setFeedback({ message: "", type: "" });
+                        setIsSubmitting(true);
+
                         const first_name = data.first_name;
                         const last_name = data.last_name;
                         const email = data.email;
                         const password = data.password;
                         const confirm_password = data.confirm_password;
 
-                        const res = await register({ first_name, last_name, email, password, confirm_password });
-                        console.log(res);
-                        if (res.success) nav("/perfil");
+                        const res: any = await register({ first_name, last_name, email, password, confirm_password });
+                        setIsSubmitting(false);
+
+                        if (res?.success) {
+                            nav("/perfil");
+                        } else {
+                            setFeedback({
+                                message: res?.content?.message || "Erro ao registar. Tente novamente.",
+                                type: "error"
+                            });
+                        }
                     }}>
                         <i className={`${style.icon} bi bi-person-plus`}></i>
                         <div className={style.input}>
@@ -125,10 +147,14 @@ export default function Register() {
                                 minLength={10}
                             />
                         </div>
+                        {feedback.message && (
+                            <div className={`${style.status_message} ${feedback.type === "success" ? style.success : style.error}`}>
+                                {feedback.message}
+                            </div>
+                        )}
                         <div>
-
-                            <button className={style.button_register} type="submit">
-                                Registar <i className="bi bi-arrow-right"></i>
+                            <button className={style.button_register} type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? "Enviando..." : "Registar"} <i className="bi bi-arrow-right"></i>
                             </button>
                         </div>
                     </form>

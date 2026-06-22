@@ -40,7 +40,7 @@ String server_data;
 void setup() {
   WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
   Serial.begin(115200);
-  // connect_to_wifi(ssid, password);
+  connect_to_wifi(ssid, password);
 
   display.init();
   display.backlight();
@@ -87,7 +87,8 @@ void loop() {
   Serial.printf("| %s \n", data_system.c_str());
   printf("|----------------------------------------------------|\n");
 
-  // server_data = send_data_system(data_system);
+  mq2.print("| > Mostrando dados do ar: ");
+  server_data = send_data_system(data_system);
 
   display.setCursor(0, 0);
   display.print("Hum: ");

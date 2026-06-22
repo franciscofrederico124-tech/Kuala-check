@@ -8,6 +8,8 @@ const data_session = require("./src/routes/data_session");
 const get_data_system = require("./src/routes/system_data_firmware");
 const { set_water_pump } = require("./src/routes/actions");
 const me = require("./src/routes/me");
+const updte = require("./src/routes/update");
+const remove_account = require("./src/routes/remove_account");
 
 const Login = require("./src/routes/login");
 const register = require("./src/routes/register");
@@ -45,6 +47,8 @@ server.use(
 server.post("/login", Login);
 server.post("/logout", log_out);
 server.post("/register", register);
+server.post("/update", updte);
+server.post("/remove_account", remove_account);
 
 server.post("/system/send_data", get_data_system);
 server.get("/ping", ping);
@@ -61,5 +65,7 @@ server.listen(door, () => {
   console.log("|_____________________________| ");
   console.log("|   Rotas disponiveis         |");
   console.log("| > /ping     (GET)           |");
+  console.log("| > /remove_account (DELETE)  |");
+  console.log("| > /system/me (POST)         |");
   console.log("|-----------------------------|");
 });

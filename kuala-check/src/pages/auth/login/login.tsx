@@ -9,11 +9,23 @@ import nav from "../../../hooks/nav"
 
 import { useState, useEffect } from "react"
 
+interface FeedbackState {
+    message: string;
+    type: "success" | "error" | "";
+}
+
 export default function Login() {
     const [data_login, set_data_login] = useState({
         email: "",
         password: "",
     });
+
+    const [feedback, setFeedback] = useState<FeedbackState>({
+        message: "",
+        type: ""
+    });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
 
 
@@ -35,12 +47,22 @@ export default function Login() {
                 <section className={style.container_form}>
                     <form className={style.form} autoComplete="off" onSubmit={async (e) => {
                         e.preventDefault();
+                        setFeedback({ message: "", type: "" });
+                        setIsSubmitting(true);
+
                         const email = data_login.email;
                         const password = data_login.password;
                         const res : any = await Logar({ email, password });
-                        console.log(res.success);
-                        if (res.success) nav("/inicio/dashboard");
+                        setIsSubmitting(false);
 
+                        if (res?.success) {
+                            nav("/inicio/dashboard");
+                        } else {
+                            const message = typeof res === "string"
+                                ? res
+                                : res?.content?.message || "Erro ao entrar. Tente novamente.";
+                            setFeedback({ message, type: "error" });
+                        }
                     }}>
                         <i className={`${style.icon} bi bi-person-circle `}></i>
                         <div className={style.input}>
@@ -73,9 +95,14 @@ export default function Login() {
                                 maxLength={20}
                             />
                         </div>
+                        {feedback.message && (
+                            <div className={`${style.status_message} ${feedback.type === "success" ? style.success : style.error}`}>
+                                {feedback.message}
+                            </div>
+                        )}
                         <div>
-                            <button className={style.button_login} type="submit">
-                                Entrar <i className="bi bi-arrow-right"></i>
+                            <button className={style.button_login} type="submit" disabled={isSubmitting}>
+                                {isSubmitting ? "Entrando..." : "Entrar"} <i className="bi bi-arrow-right"></i>
                             </button>
                         </div>
                     </form>

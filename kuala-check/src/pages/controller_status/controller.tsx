@@ -28,7 +28,7 @@ export default function ControllerStatus() {
                     if (prevTime <= 1) {
                         clearInterval(cronometro);
                         set_staus_pump(false);
-                        set_water_pump(false);
+                        set_water_pump(0);
                         set_quantity(0);
                         return 0;
                     }
@@ -39,6 +39,10 @@ export default function ControllerStatus() {
 
         return () => clearInterval(cronometro);
     }, [status_pump, time]);
+
+    useEffect(() => {
+        set_water_pump(0);
+    }, [])
 
     const renderTime = (time / 60).toFixed(1);
 
@@ -83,7 +87,7 @@ export default function ControllerStatus() {
                                         }
                                         else {
                                             set_staus_pump(!status_pump);
-                                            set_water_pump(!status_pump);
+                                            set_water_pump(status_pump ? 0 : 1);
                                         }
                                     }}
                                 >

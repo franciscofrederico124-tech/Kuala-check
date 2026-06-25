@@ -1,3 +1,6 @@
+#include <Arduino.h>
+#include <WiFi.h>
+
 void connect_to_wifi(String ssid, String password) {
   WiFi.begin(ssid.c_str(), password.c_str());
   printf("| > Conectando à rede %s \n", ssid.c_str());

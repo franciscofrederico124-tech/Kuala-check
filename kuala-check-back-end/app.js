@@ -1,6 +1,7 @@
 const express = require("express");
 const session = require("express-session");
 const cors = require("cors");
+const dotenv = require("dotenv");
 
 const ping = require("./src/routes/ping");
 const init_system = require("./src/config/init_system");
@@ -16,10 +17,10 @@ const register = require("./src/routes/register");
 const log_out = require("./src/routes/log_out");
 
 const server = express();
-const door = 4000;
 
 init_system();
 
+dotenv.config();
 server.use(
   cors({
     origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -54,14 +55,16 @@ server.post("/system/send_data", get_data_system);
 server.get("/ping", ping);
 
 server.get("/system/session", data_session);
-server.get("/system/set_water_pump", set_water_pump);
+server.post("/system/set_water_pump", set_water_pump);
 server.get("/system/me", me);
 
-server.listen(door, () => {
+const port = process.env.PORT;
+
+server.listen(port, () => {
   console.log("|-----------------------------|");
   console.log("| > Servidor on               |");
-  console.log(`| > Porta: ${door}               |`);
-  console.log(`| > http://localhost:${door}     |`);
+  console.log(`| > Porta: ${port}               |`);
+  console.log(`| > http://localhost:${port}     |`);
   console.log("|_____________________________| ");
   console.log("|   Rotas disponiveis         |");
   console.log("| > /ping     (GET)           |");

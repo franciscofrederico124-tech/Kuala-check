@@ -1,6 +1,8 @@
 const db = require("../config/data_base_config");
 const bcrypt = require("bcryptjs");
 
+const globals = require("../hooks/global");
+
 module.exports = async function Login(req, res) {
   const { email, password } = req.body;
 
@@ -8,113 +10,96 @@ module.exports = async function Login(req, res) {
     return res.status(400).json({
       success: false,
       status: 400,
-      content: { message: "Preencha todos os campos! " },
+      content: { message: "Preencha todos os campos!" },
     });
   }
 
+  const cleanEmail = email.trim();
   const email_regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const valid_email = email_regex.test(email);
+
+  if (cleanEmail.length < 5 || !email_regex.test(cleanEmail)) {
+    return res.status(400).json({
+      success: false,
+      status: 400,
+      content: { message: "Insira um email válido!" },
+    });
+  }
+
+  if (password.length < 10) {
+    return res.status(400).json({
+      success: false,
+      status: 400,
+      content: { message: "Credenciais incorretas!" },
+    });
+  }
 
   try {
-    if (!email.trim() || email.trim().length < 5 || !valid_email) {
+    const user = db.prepare("SELECT * FROM users WHERE email = ?").get(cleanEmail);
+
+    if (!user || !user.password) {
       return res.status(400).json({
         success: false,
         status: 400,
-        content: { message: "Insira um email válido! " },
-      });
-    }
-    if (!password.trim() || password.trim().length < 10) {
-      return res.status(400).json({
-        success: false,
-        status: 400,
-        content: { message: "Insira uma password válida! " },
+        content: { message: "Credenciais incorretas!" },
       });
     }
 
-    const data = db.prepare("SELECT * FROM users WHERE email = ? ").get(email);
-
-    if (!data || !data.password) {
-      return res.status(400).json({
-        success: false,
-        status: 400,
-        content: { message: "Usuário não encontrado! " },
-      });
-    }
-
-    const valid_password = await bcrypt.compare(password, data.password);
+    const valid_password = await bcrypt.compare(password, user.password);
 
     if (!valid_password) {
       return res.status(400).json({
         success: false,
         status: 400,
-        content: { message: "Password incorrecta! " },
+        content: { message: "Credenciais incorretas!" },
       });
     }
 
     req.session.regenerate((err) => {
       if (err) {
-        console.log("Erro ao regenerar sessão:", err.message);
+        console.error("Erro ao regenerar sessão:", err.message);
         return res.status(500).json({
           success: false,
           status: 500,
-          content: { message: "Erro interno ao iniciar sessão! " },
+          content: { message: "Erro interno ao iniciar sessão!" },
         });
       }
-      const names = data.name.split(" ");
+
+      const names = (user.name || "").trim().split(/\s+/);
+      const first_name = names[0] || "";
+      const last_name = names.length > 1 ? names[names.length - 1] : "";
+
       req.session.user_data = {
-        id: data.id,
-        name: data.name,
-        first_name: names[0],
-        last_name: names[1],
-        email: data.email,
-      };
-
-      req.session.system_data = {
-        system: {
-          Firmware: null,
-          software_leanguage: null,
-          version: null,
-        },
-        data: {
-          sensors: {
-            air_sensor: null,
-            soil_humidity: null,
-            air_humidity: null,
-            air_temperature: null,
-          },
-          actors: {
-            water_pump: null,
-          },
-        },
-      };
-
-      req.session.actions = {
-        water_pump: false,
+        id: user.id,
+        name: user.name,
+        first_name: first_name,
+        last_name: last_name,
+        email: user.email,
       };
 
       req.session.save((error) => {
         if (error) {
-          console.log("Erro ao salvar sessão:", error.message);
+          console.error("Erro ao salvar sessão:", error.message);
           return res.status(500).json({
             success: false,
             status: 500,
-            content: { message: "Sessão não iniciada! " },
+            content: { message: "Erro ao estabelecer sessão!" },
           });
         }
 
         return res.status(200).json({
           success: true,
           status: 200,
-          content: { message: "Sessão iniciada com sucesso! " },
+          content: { message: "Sessão iniciada com sucesso!" },
         });
       });
     });
+
   } catch (error) {
-    console.log("| > Ocorreu um erro: ", error);
+    console.error("| > Erro no processo de Login: ", error);
     return res.status(500).json({
       success: false,
       status: 500,
-      content: { message: "Ocorreu um erro interno! " },
+      content: { message: "Ocorreu um erro interno no servidor!" },
     });
   }
 };

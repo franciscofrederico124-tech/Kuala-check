@@ -11,16 +11,12 @@
 #include "soc/soc.h"
 #include "soc/rtc_cntl_reg.h"
 
-
-void connect_to_wifi(String ssid, String password);
-String send_data_system(String data_system);
-
-String ssid = "itel A100C";
-String password = "francisco_tech_2026";
-String apiBase = "http://192.168.0.1";
-
 #define dht_pin 4
 #define dht_type DHT11
+
+String apiBase = "http://192.168.8.173:4001";
+String ssid = "Assembly";
+String password = "Orieljoelcapitadasilva";
 
 DHT dht(dht_pin, dht_type);
 LiquidCrystal_I2C display(0x27, 20, 4);
@@ -34,11 +30,14 @@ analog_sensor mq2;
 analog_sensor soil_sensor;
 analog_sensor rain_sensor;
 
-#define water_pump_status 0
+int command;
 String server_data;
 
+String send_data_system(String data_system);
+void connect_to_wifi(String ssid, String password);
+
 void setup() {
-  WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
+  analogReadResolution(10);
   Serial.begin(115200);
   connect_to_wifi(ssid, password);
 
@@ -48,9 +47,9 @@ void setup() {
   display.setCursor(0, 0);
   display.print(" Sistema iniciando... ");
 
-  mq2.begin(15);
-  soil_sensor.begin(16);
-  rain_sensor.begin(17);
+  mq2.begin(35);
+  soil_sensor.begin(15);
+  rain_sensor.begin(23);
 
   led_red.begin(5);
   led_yellow.begin(18);
@@ -61,6 +60,8 @@ void setup() {
 }
 
 void loop() {
+
+  printf(" |  > AIR: %", (int)(analogRead(23)));
   const int air = mq2.read();
   const int soil_humidity = soil_sensor.read_digital();
   const int rain = rain_sensor.read_digital();
@@ -70,7 +71,7 @@ void loop() {
   JsonDocument data;
 
   data["system"]["Firmware"] = "Esp32 dev module";
-  data["system"]["software_language"] = "C/C++"; // CORRIGIDO: Escrita de language
+  data["system"]["software_language"] = "C/C++";
   data["system"]["version"] = "1.0.0";
 
   data["data"]["sensors"]["air_sensor"] = air;
@@ -79,7 +80,7 @@ void loop() {
   data["data"]["sensors"]["air_humidity"] = air_humidity;
   data["data"]["sensors"]["air_temperature"] = air_temperature;
 
-  data["data"]["actors"]["water_pump"] = water_pump_status; 
+  data["data"]["actors"]["water_pump"] = command;
   String data_system;
   serializeJsonPretty(data, data_system);
 
@@ -87,8 +88,27 @@ void loop() {
   Serial.printf("| %s \n", data_system.c_str());
   printf("|----------------------------------------------------|\n");
 
-  mq2.print("| > Mostrando dados do ar: ");
   server_data = send_data_system(data_system);
+
+  JsonDocument response;
+
+  printf("\n|----------------------------------------------------|\n");
+  Serial.printf("| %s \n", server_data.c_str());
+  printf("|----------------------------------------------------|\n");
+
+  deserializeJson(response, server_data);
+
+  if (response["success"] == true) {
+    command = response["content"]["actors"]["water_pump"];
+    printf("| > Camando: %i", command);
+    water_pump.get_digital_command(command);
+
+  }
+
+  else {
+    water_pump.low();
+    printf("| > Erro ao enviar dados! \n");
+  }
 
   display.setCursor(0, 0);
   display.print("Hum: ");
@@ -102,5 +122,5 @@ void loop() {
 
   led_red.high();
 
-  delay(2000);
+  delay(10);
 }

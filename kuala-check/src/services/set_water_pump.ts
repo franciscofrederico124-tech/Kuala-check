@@ -1,10 +1,16 @@
 import url from "../hooks/url"
 
-export default async function set_water_pump(new_tatus: boolean) {
+export default async function set_water_pump(command: number) {
     try {
         const data = await fetch(`${url.apiBase}/system/set_water_pump`, {
-            method: "GET",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
             credentials: "include",
+            body: JSON.stringify({
+                "command": command,
+            }),
         });
 
         const response: any = await data.json();

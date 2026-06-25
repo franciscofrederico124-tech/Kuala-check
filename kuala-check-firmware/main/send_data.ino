@@ -1,37 +1,51 @@
-String send_data_system(String data_system) {
-  if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
+#include <Arduino.h>
+#include <DHT.h>
+#include <ArduinoJson.h>
+#include <WiFi.h>
+#include <HTTPClient.h>
 
-    http.begin(apiBase + "/system/send_data");
-    http.addHeader("Content-Type", "application/json");
 
-    int http_code = http.POST(data_system);
+String send_data_system(String data_system)
+{
+    if (WiFi.status() == WL_CONNECTED)
+    {
+        HTTPClient http;
 
-    if (http_code > 0) {
-      String response = http.getString();
-      http.end();
-      return response;
-    } else {
-      JsonDocument doc;
-      doc["success"] = false;
-      doc["content"]["message"] = "Erro na requisição! ";
+        http.begin(apiBase + "/system/send_data");
+        http.addHeader("Content-Type", "application/json");
 
-      String response;
-      serializeJson(doc, response);
+        int http_code = http.POST(data_system);
 
-      http.end();
-      return response;
+        if (http_code > 0)
+        {
+            String response = http.getString();
+            http.end();
+            return response;
+        }
+        else
+        {
+            JsonDocument doc;
+            doc["success"] = false;
+            doc["content"]["message"] = "Erro na requisição! ";
+
+            String response;
+            serializeJson(doc, response);
+
+            http.end();
+            return response;
+        }
     }
-  } else {
-    JsonDocument doc;
-    doc["success"] = false;
-    doc["content"]["message"] = "Erro de conexão! ";
+    else
+    {
+        JsonDocument doc;
+        doc["success"] = false;
+        doc["content"]["message"] = "Erro de conexão! ";
 
-    String response;
-    serializeJson(doc, response);
+        String response;
+        serializeJson(doc, response);
 
-    WiFi.reconnect();
+        WiFi.reconnect();
 
-    return response;
-  }
+        return response;
+    }
 }

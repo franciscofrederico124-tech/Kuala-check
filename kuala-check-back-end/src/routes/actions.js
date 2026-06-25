@@ -1,15 +1,21 @@
+const globals = require("../hooks/global");
+
 module.exports = {
   set_water_pump: async function water_pum(req, res) {
+
+    const { command } = req.body;
+
     if (req.session && req.session.user_data) {
       try {
-        const actual_status = req.session.actions.water_pum;
-        req.session.actions.water_pum = !actual_status;
+        const actual_status = globals.water_pump;
+        const new_status = command;
+        globals.water_pump = command;
 
         return res.status(200).json({
           success: true,
           content: {
             message: "Estado actualizado! ",
-            status: actual_status,
+            status: new_status,
           },
         });
       } catch (error) {
@@ -17,7 +23,7 @@ module.exports = {
           success: false,
           content: {
             message: "Estado não actualizado! ",
-            status: !actual_status,
+            status: actual_status,
           },
         });
       }
@@ -26,6 +32,7 @@ module.exports = {
         success: false,
         content: {
           message: "Sem sessão iniciada! ",
+          status: actual_status,
         },
       });
     }

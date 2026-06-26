@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink as Link, useNavigate } from "react-router-dom";
 import style from "./header.module.css";
 import check_session from "../../tools/check_session";
+import logo from "../../public/image/logo.png";
 
 export default function Header() {
     const nav = useNavigate();
@@ -18,7 +19,7 @@ export default function Header() {
     return (
         <header className={style.header}>
             <div className={style.logo}>
-                <img src="/public/image/logo.png" alt="Logo" />
+                <img src={logo} alt="Logo" />
                 <h2>Kuala Check</h2>
             </div>
             <nav>

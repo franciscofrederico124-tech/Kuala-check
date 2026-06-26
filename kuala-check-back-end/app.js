@@ -23,7 +23,7 @@ init_system();
 dotenv.config();
 server.use(
   cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: process.env.URL_FRONT_END,
     credentials: true,
   }),
 );

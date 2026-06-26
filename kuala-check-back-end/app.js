@@ -1,7 +1,9 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const session = require("express-session");
 const cors = require("cors");
-const dotenv = require("dotenv");
 
 const ping = require("./src/routes/ping");
 const init_system = require("./src/config/init_system");
@@ -20,7 +22,6 @@ const server = express();
 
 init_system();
 
-dotenv.config();
 server.use(
   cors({
     origin: process.env.URL_FRONT_END
@@ -29,19 +30,23 @@ server.use(
     credentials: true,
   }),
 );
+
 server.use(express.json());
+
+// ATENÇÃO: Configuração obrigatória para produção (Render)
+server.set("trust proxy", 1);
+
 server.use(
   session({
     name: "kuala_session",
-    secret: "kuala_check_secret_key",
+    secret: process.env.SESSION_SECRET || "kuala_check_secret_key",
     resave: false,
     saveUninitialized: false,
-    credentials: true,
     cookie: {
       maxAge: 1000 * 60 * 60 * 2,
-      secure: false,
+      secure: true,
+      sameSite: "none",
       httpOnly: true,
-      sameSite: "lax",
       path: "/",
     },
   }),
@@ -60,17 +65,12 @@ server.get("/system/session", data_session);
 server.post("/system/set_water_pump", set_water_pump);
 server.get("/system/me", me);
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
   console.log("|-----------------------------|");
   console.log("| > Servidor on               |");
-  console.log(`| > Porta: ${port}               |`);
+  console.log(`| > Porta: ${port}                |`);
   console.log(`| > http://localhost:${port}     |`);
   console.log("|_____________________________| ");
-  console.log("|   Rotas disponiveis         |");
-  console.log("| > /ping     (GET)           |");
-  console.log("| > /remove_account (DELETE)  |");
-  console.log("| > /system/me (POST)         |");
-  console.log("|-----------------------------|");
 });

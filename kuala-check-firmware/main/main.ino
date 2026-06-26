@@ -14,7 +14,7 @@
 #define dht_pin 4
 #define dht_type DHT11
 
-String apiBase = "http://192.168.8.173:4001";
+String apiBase = "https://kuala-check-back-end.onrender.com;
 String ssid = "Assembly";
 String password = "Orieljoelcapitadasilva";
 

@@ -23,7 +23,9 @@ init_system();
 dotenv.config();
 server.use(
   cors({
-    origin: process.env.URL_FRONT_END,
+    origin: process.env.URL_FRONT_END
+      ? process.env.URL_FRONT_END.trim().split(",")
+      : [],
     credentials: true,
   }),
 );
